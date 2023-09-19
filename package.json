@@ -1,0 +1,16 @@
+{
+  "name": "momotalk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Yet another Blue Archive Monotalk editor",
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [
+    "momotalk",
+    "blue archive"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "packageManager": "yarn@3.6.3"
+}

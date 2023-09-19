@@ -1,0 +1,38 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=14.18.0 || >= 16.10.0"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "skr dev",
+    "build": "skr build --clean",
+    "analyze": "npm run build -- --analyze --build-target=stable",
+    "lint": "skr lint",
+    "lint-staged": "skr lint --staged --fix --auto-stage",
+    "test": "skr test --target=react"
+  },
+  "dependencies": {
+    "core-js": "^3.32.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@reskript/cli": "6.0.2",
+    "@reskript/cli-build": "6.0.2",
+    "@reskript/cli-dev": "6.0.2",
+    "@reskript/cli-lint": "6.0.2",
+    "@reskript/config-lint": "6.0.2",
+    "@reskript/settings": "6.0.2",
+    "@types/eslint": "^8",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
+    "eslint": "^8.49.0",
+    "stylelint": "^15.10.3",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2"
+  }
+}

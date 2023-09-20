@@ -1,0 +1,37 @@
+.text-input {
+    --height: 40px;
+
+    position: relative;
+    height: var(--height);
+
+    &-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        height: 100%;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6d788b;
+    }
+
+    &-box {
+        appearance: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 0;
+        border: none;
+        border: 1px solid #9e9ea7;
+        border-radius: 4px;
+        font-size: inherit;
+
+        &.has-icon {
+            padding-left: var(--height);
+        }
+    }
+}

@@ -1,0 +1,35 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    background-color: #f5f7f8;
+    background-image: url(./background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(12px);
+}
+
+@font-face {
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url('./Nunito.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: Blueaka;
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url('./Blueaka.woff2') format('woff2');
+}
+
+:root {
+    --chat-font-family: Blueaka, sans-serif;
+}

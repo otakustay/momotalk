@@ -1,0 +1,30 @@
+.sidebar {
+    grid-area: sidebar;
+    width: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #4e5a6d;
+
+    &-navigation {
+        width: 100%;
+    }
+
+    &-item {
+        width: 100%;
+        aspect-ratio: 1;
+        color: #a7adb6;
+        font-size: 35px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &:hover,
+        &-active {
+            color: #fff;
+            background-color: #6b788d;
+            transition: background-color .4s ease;
+        }
+    }
+}

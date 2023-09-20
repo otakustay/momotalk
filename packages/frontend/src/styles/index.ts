@@ -1,1 +1,1 @@
-import './app.global.less';
+import './app.less';

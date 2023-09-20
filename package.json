@@ -6,11 +6,22 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "postinstall": "husky install",
+    "fe": "yarn workspace frontend start",
+    "lint": "nx run-many --target=lint",
+    "build": "nx run-many --target=build",
+    "ci": "yarn install --immutable && npm run lint && npm run build"
+  },
   "keywords": [
     "momotalk",
     "blue archive"
   ],
   "author": "",
   "license": "Apache-2.0",
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.3",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "nx": "16.8.1"
+  }
 }

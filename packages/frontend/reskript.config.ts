@@ -11,6 +11,9 @@ export default configure(
         // https://reskript.dev/docs/settings/build
         build: {
             appTitle: 'Momotalk',
+            style: {
+                modules: false,
+            },
         },
         // https://reskript.dev/docs/settings/dev-server
         devServer: {

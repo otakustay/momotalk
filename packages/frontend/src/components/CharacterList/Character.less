@@ -1,0 +1,49 @@
+.character-list-item {
+    display: grid;
+    grid-template-areas:
+        "avatar name organization"
+        "avatar message organization";
+    grid-template-rows: 40px 24px;
+    grid-template-columns: 64px 1fr 64px;
+    align-items: center;
+    column-gap: 16px;
+    padding: 16px 24px;
+    border-top: 1px #e1e7ec solid;
+    border-bottom: 1px #e1e7ec solid;
+
+    &:hover {
+        background-color: #e2e7eb;
+        transition: background-color .4s ease;
+    }
+
+    &-avatar {
+        grid-area: avatar;
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+    }
+
+    &-name {
+        grid-area: name;
+        font-size: 24px;
+        font-weight: 1000;
+        color: #2a323e;
+        font-family: var(--chat-font-family);
+    }
+
+    &-message {
+        grid-area: message;
+        font-size: 18px;
+        color: #87929e;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: var(--chat-font-family);
+    }
+
+    &-organization {
+        grid-area: organization;
+        width: 100%;
+        filter: brightness(15%);
+    }
+}

@@ -1,14 +1,7 @@
 import {CSSProperties} from 'react';
-import {CharacterInfo, CharacterOrganization} from '@/api/character';
+import {CharacterInfo} from '@/api/character';
+import {resolveAvatarUrl, resolveOrganizationIconUrl} from '@/utils/character';
 import './Character.less';
-
-function resolveAvatarUrl(id: number) {
-    return `https://schale.gg/images/student/collection/${id}.webp`;
-}
-
-function resolveOrganizationIconUrl(name: CharacterOrganization) {
-    return `https://schale.gg/images/schoolicon/School_Icon_${name.toUpperCase()}_W.png`;
-}
 
 interface Props extends CharacterInfo {
     style?: CSSProperties;

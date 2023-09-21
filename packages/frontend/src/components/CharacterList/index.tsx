@@ -34,10 +34,10 @@ function CharacterList() {
         },
         [characters, searchKeyword]
     );
-    const [root, size] = useElementSize();
+    const [list, size] = useElementSize();
 
     return (
-        <div ref={root} className="character-list">
+        <div className="character-list">
             <div className="character-list-search">
                 <Input
                     className="character-list-search-input"
@@ -47,19 +47,22 @@ function CharacterList() {
                     onChange={setKeyword}
                 />
             </div>
-            {
-                !!size && (
-                    <FixedSizeList
-                        {...size}
-                        itemCount={dataSource.length}
-                        itemSize={98}
-                        itemData={dataSource}
-                        itemKey={(index, item) => item[index].id}
-                    >
-                        {Row}
-                    </FixedSizeList>
-                )
-            }
+            <div ref={list} key="a">
+                {
+                    !!size && (
+                        <FixedSizeList
+                            className="character-list-scroll"
+                            {...size}
+                            itemCount={dataSource.length}
+                            itemSize={98}
+                            itemData={dataSource}
+                            itemKey={(index, item) => item[index].id}
+                        >
+                            {Row}
+                        </FixedSizeList>
+                    )
+                }
+            </div>
         </div>
     );
 }

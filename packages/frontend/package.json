@@ -26,6 +26,7 @@
     "@reskript/cli-build": "6.0.2",
     "@reskript/cli-dev": "6.0.2",
     "@reskript/cli-lint": "6.0.2",
+    "@reskript/cli-play": "6.0.2",
     "@reskript/config-lint": "6.0.2",
     "@reskript/settings": "6.0.2",
     "@types/eslint": "^8",

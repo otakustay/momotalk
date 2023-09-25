@@ -1,39 +1,36 @@
-import {CSSProperties, useMemo, useState} from 'react';
-import {useDebouncedValue, useElementSize} from 'huse';
-import Fuse from 'fuse.js';
-import {useConstantResource, withBoundary} from 'react-suspense-boundary';
+import {CSSProperties} from 'react';
+import {useElementSize} from 'huse';
+import {withBoundary} from 'react-suspense-boundary';
 import {FixedSizeList} from 'react-window';
-import characterApi, {CharacterInfo} from '@/api/character';
+import {CharacterInfo} from '@/api/character';
+import {useCharacterSearchKeywordState, useFilteredCharacters} from '@/atoms/character';
+import {useSelectChatCharacter} from '@/atoms/chat';
 import Input from '@/components/Input';
 import IconSearch from './Search.svg?react';
 import Character from './Character';
 import './index.less';
 
+interface RowData {
+    dataSource: CharacterInfo[];
+    onSelect: (value: CharacterInfo) => void;
+}
+
 interface RowProps {
     style: CSSProperties;
     index: number;
-    data: CharacterInfo[];
+    data: RowData;
 }
 
 function Row({style, index, data}: RowProps) {
-    return <Character style={style} {...data[index]} />;
+    const character = data.dataSource[index];
+
+    return <Character style={style} {...character} onSelect={data.onSelect} />;
 }
 
 function CharacterList() {
-    const [keyword, setKeyword] = useState('');
-    const searchKeyword = useDebouncedValue(keyword, 150);
-    const [characters] = useConstantResource(characterApi.list);
-    const dataSource = useMemo(
-        () => {
-            const search = searchKeyword.trim();
-            if (search) {
-                const fuse = new Fuse(characters, {findAllMatches: true, keys: ['name', 'organization']});
-                return fuse.search(search).map(v => v.item);
-            }
-            return characters;
-        },
-        [characters, searchKeyword]
-    );
+    const [keyword, setKeyword] = useCharacterSearchKeywordState();
+    const characters = useFilteredCharacters();
+    const selectCharacter = useSelectChatCharacter();
     const [list, size] = useElementSize();
 
     return (
@@ -53,10 +50,10 @@ function CharacterList() {
                         <FixedSizeList
                             className="character-list-scroll"
                             {...size}
-                            itemCount={dataSource.length}
+                            itemCount={characters.length}
                             itemSize={98}
-                            itemData={dataSource}
-                            itemKey={(index, item) => item[index].id}
+                            itemData={{dataSource: characters, onSelect: selectCharacter}}
+                            itemKey={(index, item) => item.dataSource[index].id}
                         >
                             {Row}
                         </FixedSizeList>

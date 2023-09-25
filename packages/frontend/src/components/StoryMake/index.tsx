@@ -1,20 +1,30 @@
-import {useConstantResource, useResource} from 'react-suspense-boundary';
-import storyApi from '@/api/story';
-import characterApi from '@/api/character';
+import {useResource} from 'react-suspense-boundary';
+import {useCallback, useState} from 'react';
+import storyApi, {MessageCreatePayload} from '@/api/story';
 import CharacterList from '@/components/CharacterList';
 import ChatList from '@/components/ChatList';
+import InputSection from './InputSection';
 import './index.less';
 
 export default function StoryMake() {
-    const [characters] = useConstantResource(characterApi.list);
-    const [story] = useResource(storyApi.findById, 1);
+    const [story, {refresh}] = useResource(storyApi.findById, 1);
+    const [messageSending, setMessageSending] = useState<MessageCreatePayload | null>(null);
+    const send = useCallback(
+        async (message: MessageCreatePayload) => {
+            setMessageSending(message);
+            await storyApi.sendMessage(story.id, message);
+            await refresh();
+            setMessageSending(null);
+        },
+        [refresh, story.id]
+    );
 
     return (
         <div className="story-make">
             <CharacterList />
             <div className="story-make-workspace">
-                <ChatList characters={characters} messages={story.messages} />
-                <div style={{backgroundColor: '#eee'}}>Textbox</div>
+                <ChatList messages={story.messages} sending={messageSending} />
+                <InputSection parentMessageId={story.messages.at(-1)?.id ?? null} onSend={send} />
                 <div style={{backgroundColor: '#f4f7f8'}}>Action</div>
             </div>
         </div>

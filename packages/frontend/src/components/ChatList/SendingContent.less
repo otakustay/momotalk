@@ -1,0 +1,32 @@
+@keyframes chat-message-content-sending-blink {
+    from {
+        opacity: .2;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.chat-message-content-sending {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: 32px;
+
+    > i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: currentColor;
+        animation: .3s chat-message-content-sending-blink infinite alternate;
+
+        &:nth-child(2) {
+            animation-delay: .1s;
+        }
+
+        &:nth-child(4) {
+            animation-delay: .2s;
+        }
+    }
+}

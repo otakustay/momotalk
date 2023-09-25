@@ -1,4 +1,4 @@
-import './TextContent.less';
+import MessageDialogOutline from './MessageDialogOutline';
 
 interface Props {
     side: 'self' | 'target';
@@ -8,9 +8,9 @@ interface Props {
 export default function TextContent({side, content}: Props) {
     const lines = content.split('\n');
     const renderLine = (line: string, index: number) => (
-        <p key={index} className={`chat-message-content-text chat-message-content-text-${side}`}>
+        <MessageDialogOutline key={index} side={side}>
             {line}
-        </p>
+        </MessageDialogOutline>
     );
 
     return (

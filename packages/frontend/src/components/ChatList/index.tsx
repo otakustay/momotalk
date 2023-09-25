@@ -1,5 +1,6 @@
-import {MessageInfo} from '@/api/story';
-import {CharacterInfo} from '@/api/character';
+import {useEffect, useRef} from 'react';
+import {MessageCreatePayload, MessageInfo} from '@/api/story';
+import {useAllCharacters} from '@/atoms/character';
 import SelfMessage from './SelfMessage';
 import TextContent from './TextContent';
 import TargetMessage from './TargetMessage';
@@ -7,6 +8,7 @@ import ImageContent from './ImageContent';
 import EventMessage from './EventMessage';
 import InfoMessage from './InfoMessage';
 import ReplyMessage from './ReplyMessage';
+import SendingContent from './SendingContent';
 import './index.less';
 
 function renderMessageContent(type: 'text' | 'image', side: 'self' | 'target', content: string) {
@@ -19,11 +21,21 @@ function renderMessageContent(type: 'text' | 'image', side: 'self' | 'target', c
 }
 
 interface Props {
-    characters: CharacterInfo[];
     messages: MessageInfo[];
+    sending: MessageCreatePayload | null;
 }
 
-export default function ChatList({characters, messages}: Props) {
+export default function ChatList({messages, sending}: Props) {
+    const characters = useAllCharacters();
+    const root = useRef<HTMLDivElement>(null);
+    useEffect(
+        () => {
+            if (root.current && sending) {
+                root.current.scrollTo({top: root.current.scrollHeight, behavior: 'smooth'});
+            }
+        },
+        [sending]
+    );
     const renderMessage = (message: MessageInfo) => {
         if (message.side === 'self') {
             return (
@@ -56,10 +68,32 @@ export default function ChatList({characters, messages}: Props) {
         }
         return null;
     };
+    const renderSendingMessage = (message: MessageCreatePayload) => {
+        if (message.side === 'target') {
+            const character = characters.find(c => c.id === message.target);
+
+            if (!character) {
+                throw new Error(`Character ${message.target} not found`);
+            }
+
+            return (
+                <TargetMessage character={character}>
+                    <SendingContent side="target" />
+                </TargetMessage>
+            );
+        }
+
+        return (
+            <SelfMessage>
+                <SendingContent side="self" />
+            </SelfMessage>
+        );
+    };
 
     return (
-        <div className="chat-list">
+        <div ref={root} className="chat-list">
             {messages.map(renderMessage)}
+            {sending && renderSendingMessage(sending)}
         </div>
     );
 }

@@ -5,6 +5,7 @@ import CharacterList from '@/components/CharacterList';
 import ChatList from '@/components/ChatList';
 import InputSection from './InputSection';
 import './index.less';
+import ActionSection from './ActionSection';
 
 export default function StoryMake() {
     const [story, {refresh}] = useResource(storyApi.findById, 1);
@@ -25,7 +26,7 @@ export default function StoryMake() {
             <div className="story-make-workspace">
                 <ChatList messages={story.messages} sending={messageSending} />
                 <InputSection parentMessageId={story.messages.at(-1)?.id ?? null} onSend={send} />
-                <div style={{backgroundColor: '#f4f7f8'}}>Action</div>
+                <ActionSection />
             </div>
         </div>
     );

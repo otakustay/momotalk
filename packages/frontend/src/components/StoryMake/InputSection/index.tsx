@@ -1,34 +1,37 @@
 import {useCallback, useState} from 'react';
 import Input from '@/components/Input';
-import {CharacterInfo} from '@/api/character';
 import {MessageCreatePayload} from '@/api/story';
-import {resolveAvatarUrl} from '@/utils/character';
-import {useChatTarget} from '@/atoms/chat';
+import {ChatTarget, useCurrentChatTarget} from '@/atoms/chat';
+import ChatTargetAvatar from '@/components/ChatTargetAvatar';
 import ActionButton from './ActionButton';
 import IconSend from './Send.svg?react';
 import './index.less';
 
-interface TargetAvatarProps {
-    target: CharacterInfo | null;
-}
-
-function TargetAvatar({target}: TargetAvatarProps) {
-    if (!target) {
-        return <div className="chat-input-section-target" />;
-    }
-
+function createMessage(target: ChatTarget, parentMessageId: number | null, text: string): MessageCreatePayload {
     if (typeof target === 'object') {
-        return (
-            <div className="chat-input-section-target">
-                <img src={resolveAvatarUrl(target.id)} alt={target.name} />
-            </div>
-        );
+        return {
+            parent: parentMessageId,
+            target: target.id,
+            side: 'target',
+            type: 'text',
+            content: text.trim(),
+        };
     }
-    return (
-        <div className="chat-input-section-target">
-            {target}
-        </div>
-    );
+    else if (target === 'self') {
+        return {
+            parent: parentMessageId,
+            type: 'text',
+            side: 'self',
+            content: text.trim(),
+        };
+    }
+
+    return {
+        parent: parentMessageId,
+        type: target,
+        side: 'system',
+        content: text.trim(),
+    };
 }
 
 interface Props {
@@ -37,7 +40,7 @@ interface Props {
 }
 
 export default function InputSection({parentMessageId, onSend}: Props) {
-    const target = useChatTarget();
+    const target = useCurrentChatTarget();
     const [text, setText] = useState('');
     const sendMessage = useCallback(
         () => {
@@ -46,21 +49,16 @@ export default function InputSection({parentMessageId, onSend}: Props) {
             }
 
             setText('');
-            const message: MessageCreatePayload = {
-                parent: parentMessageId,
-                target: target.id,
-                side: 'target',
-                type: 'text',
-                content: text.trim(),
-            };
+            const message = createMessage(target, parentMessageId, text);
             onSend(message);
+
         },
         [onSend, parentMessageId, target, text]
     );
 
     return (
         <div className="chat-input-section">
-            <TargetAvatar target={target} />
+            <ChatTargetAvatar className="chat-input-section-target" target={target} />
             <Input
                 className="chat-input-section-input"
                 disabled={!target}

@@ -3,22 +3,41 @@ import {atom, useAtomValue, useSetAtom} from 'jotai';
 import {uniqBy} from 'ramda';
 import {CharacterInfo} from '@/api/character';
 
-const chatCharacterTargets = atom<CharacterInfo[]>([]);
+export type FixedChatTarget = 'self' | 'event' | 'reply' | 'info';
 
-export function useChatCharacterTargets() {
-    return useAtomValue(chatCharacterTargets);
+export type ChatTarget = CharacterInfo | FixedChatTarget;
+
+interface ChatTargetStore {
+    current: ChatTarget;
+    recent: CharacterInfo[];
 }
 
-export function useSelectChatCharacter() {
-    const setValue = useSetAtom(chatCharacterTargets);
+const chatTarget = atom<ChatTargetStore>({current: 'self', recent: []});
+
+export function useCurrentChatTarget() {
+    const value = useAtomValue(chatTarget);
+    return value.current;
+}
+
+export function useRecentChatCharacters() {
+    return useAtomValue(chatTarget).recent;
+}
+
+export function useSelectChatTarget() {
+    const setTarget = useSetAtom(chatTarget);
     const select = useCallback(
-        (character: CharacterInfo) => setValue(v => uniqBy(v => v.id, [character, ...v]).slice(0, 5)),
-        [setValue]
+        (target: ChatTarget) => {
+            const update = ({recent}: ChatTargetStore): ChatTargetStore => {
+                return {
+                    current: target,
+                    recent: typeof target === 'string'
+                        ? recent
+                        : uniqBy(v => v.id, [target, ...recent]).slice(0, 5),
+                };
+            };
+            setTarget(update);
+        },
+        [setTarget]
     );
     return select;
-}
-
-export function useChatTarget() {
-    const characters = useChatCharacterTargets();
-    return characters.at(0) ?? null;
 }

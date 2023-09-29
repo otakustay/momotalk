@@ -4,7 +4,7 @@ import {withBoundary} from 'react-suspense-boundary';
 import {FixedSizeList} from 'react-window';
 import {CharacterInfo} from '@/api/character';
 import {useCharacterSearchKeywordState, useFilteredCharacters} from '@/atoms/character';
-import {useSelectChatCharacter} from '@/atoms/chat';
+import {useSelectChatTarget} from '@/atoms/chat';
 import Input from '@/components/Input';
 import IconSearch from './Search.svg?react';
 import Character from './Character';
@@ -30,7 +30,7 @@ function Row({style, index, data}: RowProps) {
 function CharacterList() {
     const [keyword, setKeyword] = useCharacterSearchKeywordState();
     const characters = useFilteredCharacters();
-    const selectCharacter = useSelectChatCharacter();
+    const selectCharacter = useSelectChatTarget();
     const [list, size] = useElementSize();
 
     return (

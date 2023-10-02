@@ -6,4 +6,21 @@
     gap: 20px;
     padding: 0 20px;
     background-color: #f4f7f8;
+
+    &-button {
+        height: var(--avatar-size);
+        aspect-ratio: 1;
+        overflow: hidden;
+        border-radius: 50%;
+        background-color: #fff;
+        cursor: pointer;
+
+        &:hover {
+            > img,
+            > svg {
+                transform: scale(1.2);
+                transition: transform .2s ease;
+            }
+        }
+    }
 }

@@ -9,6 +9,7 @@ import EventMessage from './EventMessage';
 import InfoMessage from './InfoMessage';
 import ReplyMessage from './ReplyMessage';
 import SendingContent from './SendingContent';
+import Split from './Split';
 import './index.less';
 
 function renderMessageContent(type: 'text' | 'image', side: 'self' | 'target', content: string) {
@@ -65,6 +66,9 @@ export default function ChatList({messages, sending}: Props) {
         }
         if (message.type === 'reply') {
             return <ReplyMessage key={message.id} content={message.content} />;
+        }
+        if (message.type === 'split') {
+            return <Split />;
         }
         return null;
     };

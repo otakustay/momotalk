@@ -17,7 +17,7 @@ export interface SelfMessageInfo extends MessageBase {
 
 export interface SystemMessageInfo extends MessageBase {
     side: 'system';
-    type: 'reply' | 'event' | 'info';
+    type: 'reply' | 'event' | 'info' | 'split';
     content: string;
 }
 

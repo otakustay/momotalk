@@ -26,7 +26,7 @@ export default function StoryMake() {
             <div className="story-make-workspace">
                 <ChatList messages={story.messages} sending={messageSending} />
                 <InputSection parentMessageId={story.messages.at(-1)?.id ?? null} onSend={send} />
-                <ActionSection />
+                <ActionSection parentMessageId={story.messages.at(-1)?.id ?? null} onSend={send} />
             </div>
         </div>
     );

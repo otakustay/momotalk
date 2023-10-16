@@ -1,12 +1,12 @@
 import OutlineBox from '@/components/OutlineBox';
-import CharacterList from '@/components/CharacterList';
+import StoryMake from '@/components/StoryMake';
 import './index.less';
 
 export default function App() {
     return (
         <div className="root">
             <OutlineBox>
-                <CharacterList />
+                <StoryMake />
             </OutlineBox>
         </div>
     );

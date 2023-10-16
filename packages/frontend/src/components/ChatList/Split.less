@@ -1,0 +1,19 @@
+.chat-message-split {
+    --split-color: #4b5a6f;
+
+    background-image:
+        url(./scissors.svg),
+        repeating-linear-gradient(
+            to right,
+            transparent 0,
+            transparent 4px,
+            var(--split-color) 4px,
+            var(--split-color) 8px
+        );
+    background-size: 24px 24px, 100% 1px;
+    background-repeat: no-repeat;
+    background-position: center left, 16px center;
+    margin: 0 24px;
+    height: 24px;
+    min-height: 24px;
+}

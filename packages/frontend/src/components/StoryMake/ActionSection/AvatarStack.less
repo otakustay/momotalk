@@ -1,0 +1,17 @@
+.chat-action-section-avatar-stack {
+    height: var(--avatar-size);
+    display: flex;
+
+    &-item {
+        position: relative;
+        margin-right: calc(var(--avatar-size) * -.5);
+
+        &:first-of-type {
+            margin-left: 0;
+        }
+
+        &:hover {
+            z-index: 20 !important;
+        }
+    }
+}

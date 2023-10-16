@@ -1,0 +1,36 @@
+.chat-message-content-dialog {
+    position: relative;
+    width: fit-content;
+    line-height: 1.5;
+    margin: 0;
+    padding: 4px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: var(--background-color);
+    color: #ecf2fb;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-all;
+
+    &:not(:last-child) {
+        margin-bottom: 8px;
+    }
+
+    &-self:first-child::before {
+        content: "";
+        border: 6px solid transparent;
+        border-left-color: var(--background-color);
+        position: absolute;
+        right: -12px;
+        top: 8px;
+    }
+
+    &-target:first-child::before {
+        content: "";
+        border: 6px solid transparent;
+        border-right-color: var(--background-color);
+        position: absolute;
+        left: -12px;
+        top: 8px;
+    }
+}

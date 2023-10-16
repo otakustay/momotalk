@@ -11,6 +11,7 @@ export default configure(
         // https://reskript.dev/docs/settings/build
         build: {
             appTitle: 'Momotalk',
+            favicon: 'favicon.ico',
             style: {
                 modules: false,
             },

@@ -1,0 +1,31 @@
+.chat-message-target {
+    display: grid;
+    grid-template:
+        "avatar name"
+        "avatar content";
+    grid-template-columns: 64px auto;
+    grid-template-rows: 36px auto;
+    column-gap: 16px;
+    padding: 0 48px 0 24px;
+
+    &-avatar {
+        grid-area: avatar;
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+    }
+
+    &-name {
+        grid-area: name;
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 1000;
+    }
+
+    &-content {
+        --background-color: #4b5a6f;
+
+        grid-area: content;
+    }
+}

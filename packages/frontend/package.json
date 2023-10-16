@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "skr dev",
-    "build": "skr build --clean",
+    "build": "skr build --clean --strict",
     "lint": "skr lint"
   },
   "dependencies": {
@@ -15,6 +15,8 @@
     "core-js": "^3.32.2",
     "fuse.js": "^6.6.2",
     "huse": "^2.0.4",
+    "jotai": "^2.4.2",
+    "ramda": "^0.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
@@ -26,9 +28,11 @@
     "@reskript/cli-build": "6.0.2",
     "@reskript/cli-dev": "6.0.2",
     "@reskript/cli-lint": "6.0.2",
+    "@reskript/cli-play": "6.0.2",
     "@reskript/config-lint": "6.0.2",
     "@reskript/settings": "6.0.2",
     "@types/eslint": "^8",
+    "@types/ramda": "^0",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@types/react-window": "^1",

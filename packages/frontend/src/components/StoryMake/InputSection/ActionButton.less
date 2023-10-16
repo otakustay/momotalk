@@ -1,0 +1,25 @@
+.chat-input-section-action {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    > svg {
+        width: 32px;
+        height: 32px;
+        color: #4b5a6f;
+        transition: all .2s ease;
+
+        &:hover {
+            transform: scale(1.2);
+            color: #262626;
+        }
+
+        &:active {
+            transform: scale(.9);
+            color: #262626;
+        }
+    }
+}

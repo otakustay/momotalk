@@ -31,10 +31,11 @@ export default function ChatList({messages, sending}: Props) {
     const root = useRef<HTMLDivElement>(null);
     useEffect(
         () => {
-            if (root.current && sending) {
+            if (root.current) {
                 root.current.scrollTo({top: root.current.scrollHeight, behavior: 'smooth'});
             }
         },
+        // NOTE: 虽然在回调中并没有用到`sending`，但它必须是依赖项，不要删除
         [sending]
     );
     const renderMessage = (message: MessageInfo) => {

@@ -6,22 +6,20 @@ import IconSplit from './Split.svg?react';
 import './index.less';
 
 interface Props {
-    parentMessageId: number | null;
     onSend: (message: MessageCreatePayload) => void;
 }
 
-export default function ActionSection({parentMessageId, onSend}: Props) {
+export default function ActionSection({onSend}: Props) {
     const addSplit = useCallback(
         () => {
             const message: MessageCreatePayload = {
-                parent: parentMessageId,
                 side: 'system',
                 type: 'split',
                 content: '',
             };
             onSend(message);
         },
-        [onSend, parentMessageId]
+        [onSend]
     );
 
     return (

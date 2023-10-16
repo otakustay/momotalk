@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "skr dev",
-    "build": "skr build --clean",
+    "build": "skr build --clean --strict",
     "lint": "skr lint"
   },
   "dependencies": {

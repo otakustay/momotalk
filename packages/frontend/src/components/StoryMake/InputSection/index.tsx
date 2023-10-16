@@ -7,10 +7,9 @@ import ActionButton from './ActionButton';
 import IconSend from './Send.svg?react';
 import './index.less';
 
-function createMessage(target: ChatTarget, parentMessageId: number | null, text: string): MessageCreatePayload {
+function createMessage(target: ChatTarget, text: string): MessageCreatePayload {
     if (typeof target === 'object') {
         return {
-            parent: parentMessageId,
             target: target.id,
             side: 'target',
             type: 'text',
@@ -19,7 +18,6 @@ function createMessage(target: ChatTarget, parentMessageId: number | null, text:
     }
     else if (target === 'self') {
         return {
-            parent: parentMessageId,
             type: 'text',
             side: 'self',
             content: text.trim(),
@@ -27,7 +25,6 @@ function createMessage(target: ChatTarget, parentMessageId: number | null, text:
     }
 
     return {
-        parent: parentMessageId,
         type: target,
         side: 'system',
         content: text.trim(),
@@ -35,11 +32,10 @@ function createMessage(target: ChatTarget, parentMessageId: number | null, text:
 }
 
 interface Props {
-    parentMessageId: number | null;
     onSend: (message: MessageCreatePayload) => void;
 }
 
-export default function InputSection({parentMessageId, onSend}: Props) {
+export default function InputSection({onSend}: Props) {
     const target = useCurrentChatTarget();
     const [text, setText] = useState('');
     const sendMessage = useCallback(
@@ -49,11 +45,11 @@ export default function InputSection({parentMessageId, onSend}: Props) {
             }
 
             setText('');
-            const message = createMessage(target, parentMessageId, text);
+            const message = createMessage(target, text);
             onSend(message);
 
         },
-        [onSend, parentMessageId, target, text]
+        [onSend, target, text]
     );
 
     return (

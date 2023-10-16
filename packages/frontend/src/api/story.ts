@@ -1,29 +1,31 @@
 interface MessageBase {
-    parent: number | null;
+    content: string;
 }
 
 export interface TargetMessageInfo extends MessageBase {
     target: number;
     side: 'target';
     type: 'text' | 'image';
-    content: string;
 }
 
 export interface SelfMessageInfo extends MessageBase {
     side: 'self';
     type: 'text' | 'image';
-    content: string;
 }
 
 export interface SystemMessageInfo extends MessageBase {
     side: 'system';
     type: 'reply' | 'event' | 'info' | 'split';
-    content: string;
 }
 
 export type MessageCreatePayload = TargetMessageInfo | SelfMessageInfo | SystemMessageInfo;
 
-export type MessageInfo = MessageCreatePayload & {id: number};
+interface MessageStoreData {
+    id: number;
+    index: number;
+}
+
+export type MessageInfo = MessageCreatePayload & MessageStoreData;
 
 export interface Story {
     id: number;
@@ -33,10 +35,10 @@ export interface Story {
 }
 
 const messages: MessageInfo[] = [
-    {id: 1, parent: null, side: 'system', type: 'info', content: '已讀'},
+    {id: 1, index: 0, side: 'system', type: 'info', content: '已讀'},
     {
         id: 2,
-        parent: 1,
+        index: 1,
         side: 'target',
         target: 10004,
         type: 'text',
@@ -44,7 +46,7 @@ const messages: MessageInfo[] = [
     },
     {
         id: 3,
-        parent: 2,
+        index: 2,
         side: 'target',
         target: 10004,
         type: 'text',
@@ -52,14 +54,14 @@ const messages: MessageInfo[] = [
     },
     {
         id: 4,
-        parent: 3,
+        index: 3,
         side: 'self',
         type: 'text',
         content: '當然，如果是陽奈的請求',
     },
     {
         id: 5,
-        parent: 4,
+        index: 4,
         side: 'target',
         target: 10004,
         type: 'text',
@@ -67,14 +69,14 @@ const messages: MessageInfo[] = [
     },
     {
         id: 6,
-        parent: 5,
+        index: 5,
         side: 'system',
         type: 'event',
         content: '前往陽奈的羈絆劇情',
     },
     {
         id: 7,
-        parent: 6,
+        index: 6,
         side: 'target',
         target: 10004,
         type: 'text',
@@ -82,14 +84,14 @@ const messages: MessageInfo[] = [
     },
     {
         id: 8,
-        parent: 7,
+        index: 7,
         side: 'system',
         type: 'reply',
         content: '我願意為陽奈做任何事',
     },
     {
         id: 9,
-        parent: 8,
+        index: 8,
         side: 'target',
         target: 10004,
         type: 'text',
@@ -97,7 +99,7 @@ const messages: MessageInfo[] = [
     },
     {
         id: 10,
-        parent: 9,
+        index: 9,
         side: 'target',
         target: 10004,
         type: 'text',
@@ -119,9 +121,14 @@ export default {
             updatedAt: new Date().toISOString(),
         };
     },
-    sendMessage: async (id: number, message: MessageCreatePayload): Promise<MessageInfo> => {
+    sendMessage: async (storyId: number, message: MessageCreatePayload): Promise<MessageInfo> => {
         await wait(1000);
-        messages.push({id: messages[messages.length - 1].id + 1, ...message});
+        const stored: MessageInfo = {
+            ...message,
+            id: messages[messages.length - 1].id + 1,
+            index: messages.length,
+        };
+        messages.push(stored);
         return messages[messages.length - 1];
     },
 };

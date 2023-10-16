@@ -12,6 +12,10 @@ export default function StoryMake() {
     const [messageSending, setMessageSending] = useState<MessageCreatePayload | null>(null);
     const send = useCallback(
         async (message: MessageCreatePayload) => {
+            if (!message.content.trim().length) {
+                return;
+            }
+
             setMessageSending(message);
             await storyApi.sendMessage(story.id, message);
             await refresh();
@@ -25,8 +29,8 @@ export default function StoryMake() {
             <CharacterList />
             <div className="story-make-workspace">
                 <ChatList messages={story.messages} sending={messageSending} />
-                <InputSection parentMessageId={story.messages.at(-1)?.id ?? null} onSend={send} />
-                <ActionSection parentMessageId={story.messages.at(-1)?.id ?? null} onSend={send} />
+                <InputSection onSend={send} />
+                <ActionSection onSend={send} />
             </div>
         </div>
     );
